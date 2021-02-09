@@ -1,0 +1,57 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+/* You can add global styles to this file, and also import other style files */
+
+
+/* Mandatory */
+
+@import '~ng-wizard/themes/ng_wizard.min.css';
+
+/* Optional */
+
+
+/* If a theme other than default is used, the css file for that theme is required. */
+
+@import '~ng-wizard/themes/ng_wizard_theme_arrows.min.css';
+@import '~ng-wizard/themes/ng_wizard_theme_circles.min.css';
+@import '~ng-wizard/themes/ng_wizard_theme_dots.min.css';
+@import '~primeflex/primeflex.css';
+@import '~primeicons/primeicons.css';
+@import '~prismjs/themes/prism-coy.css';
+@import '~@fullcalendar/core/main.min.css';
+@import '~@fullcalendar/daygrid/main.min.css';
+@import '~@fullcalendar/timegrid/main.min.css';
+@import '~quill/dist/quill.snow.css';
+@import '~primeicons/primeicons.css';
+@import '~primeng/resources/themes/fluent-light/theme.css';
+@import '~primeng/resources/primeng.min.css';
+ui-widget {
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 90% !important;
+}
+
+p-button {
+    height: 10px;
+    margin: 5px;
+}
+
+.ui-widget .ui-widget {
+    font-size: 90% !important;
+}
+
+.prime-table {
+    text-align: center;
+    font-size: 0.8em;
+}
+
+.ui-button {
+    border-radius: 5px !important;
+    max-width: 10px !important;
+    min-width: 10px !important;
+}
+
+.ui-button-icon-only .ui-icon.fa {
+    font-size: 12px !important;
+    margin-top: -5px !important;
+}

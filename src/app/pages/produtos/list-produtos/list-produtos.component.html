@@ -1,0 +1,108 @@
+<section class="content-header">
+    <h1>
+        Lista Produtos
+    </h1>
+    <!--<ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Examples</a></li>
+        <li class="breadcrumb-item active">Blank page</li>
+	  </ol>
+	-->
+</section>
+
+<section class="content">
+    <p-dialog header="Title" [(visible)]="display" [style]="{width: '50vw'}" [baseZIndex]="10000">
+        <app-email [name]="'Email de Parimônio'" (destinatariemailemitter)="sendmail($event)" (adddestinatariemailemitter)="addcontato($event)"></app-email>
+
+    </p-dialog>
+
+
+
+    <button type="text" pButton label="Basic" (click)="op.toggle($event)"></button>
+
+    <p-overlayPanel #op [showCloseIcon]="true" [style]="{width: '450px'}">
+        <ng-template pTemplate>
+            <app-pre-produto></app-pre-produto>
+        </ng-template>
+    </p-overlayPanel>
+
+    <!-- Default box -->
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title"> </h3>
+
+            <!--<div class="form-group form-inline form-element">
+                Pesquisar: <input nz-input placeholder="Pesquisar" class="form-control form-control-sm ml-2 " name="pesquisa" name="search" [(ngModel)]="searchValue" #search (keyup)="debounceTimeSearch()">
+
+            </div>
+        -->
+            <div class="box-tools pull-right">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Dropdown button
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <button class="dropdown-item" (click)="op.toggle($event)">q</button>
+
+
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+
+                </div>
+
+                <p-splitButton label="Atividade" icon="pi pi-plus" [model]="items" [style]="{'height':'35px'}" styleClass="p-button-secondary p-button-sm"></p-splitButton>
+
+
+            </div>
+            <!--<div class="box-tools pull-right">
+              <button type="button" class="btn btn-outline-primary btn-sm"   (click)="printview()">
+                <i nz-icon nzType="printer" nzTheme="outline"></i>Imprimir
+     </button>
+                 <button class="btn btn-outline-primary mb-2 mr-2" (click)="newcentrocusto(content)">
+               
+          Adicionar
+        </button>
+            </div>
+     -->
+        </div>
+
+        <p-table #dt [value]="produtos" [(selection)]="produtos" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [filterDelay]="0" [globalFilterFields]="['name','modelo','categoria','tipoproduto']">
+            <ng-template pTemplate="caption">
+                <div class=" " style="width: 200px;">
+                    Lista de Produtos
+                    <span class="p-input-icon-left p-ml-auto">  
+                        <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" 
+                      style="width: 200px;"  placeholder="Pesquisa" />
+                    </span>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 40px;"> </th>
+                    <th>Nome</th>
+                    <th>Modelo</th>
+                    <th>Categoria</th>
+                    <th>Saldo</th>
+                    <th>valor</th>
+                    <th>Editar</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-produto>
+                <tr>
+                    <td>
+                        <p-avatar image={{produto.avatarView}} styleClass="p-mr-2" styleClass="p-mr-2" shape="circle"></p-avatar>
+
+                    </td>
+                    <td>
+                        {{produto.name}}
+                    </td>
+                    <td>{{produto.modelo}}</td>
+                    <td>{{produto.categoria}}</td>
+                    <td>{{produto.saldo}}</td>
+                    <td>{{produto.valor|currency:'BRL'}}</td>
+                    <td></td>
+                </tr>
+            </ng-template>
+        </p-table>

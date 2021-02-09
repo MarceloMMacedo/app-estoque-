@@ -1,0 +1,56 @@
+<div class="container">
+    <h3>{{name}} </h3>
+
+    <p-multiSelect [options]="contacts" [(ngModel)]="destinationEmail.to" defaultLabel="Select a email" 
+    optionLabel="name" optionValue="email">
+        <!--<ng-template let-value pTemplate="selectedItems">
+            <div class="country-item country-item-value" *ngFor="let option of destinationEmail.to">
+                <div>{{option.name}}</div>
+            </div>
+            <div *ngIf="!destinationEmail.to || destinationEmail.to.length === 0" class="country-placeholder">
+                Selecione Contato
+            </div>
+        </ng-template>
+    -->
+        <ng-template let-country pTemplate="item">
+            <div>
+                <div>{{country.name}}</div>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="footer">
+            <p-accordion>
+                <p-accordionTab header="Adicionar novo Email">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="my-input">Nome</label>
+                                    <input styleClass="md-inputfield" nz-input id="my-input" class=" form-control form-control-sm" type="text" name="name1" [(ngModel)]="contact.name">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="my-input">Email</label>
+                                    <input styleClass="md-inputfield" nz-input id="my-input" class=" form-control form-control-sm" type="text" name="name12" [(ngModel)]="contact.email">
+                                </div>
+                            </div>
+                        </div>
+                        <p-confirmPopup></p-confirmPopup>
+
+                        <button (click)="adddestinatario($event)" pButton class="p-button-text p-button-sm" icon="pi pi-check" label="Confirmar"></button>
+                    </div>
+                </p-accordionTab>
+            </p-accordion>
+        </ng-template>
+    </p-multiSelect>
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="Subject" [(ngModel)]="destinationEmail.messageSubject">
+    </div>
+    <p-editor [(ngModel)]="destinationEmail.html" [style]="{'height':'320px'}"></p-editor>
+    <div class="form-group m-b-0 m-t-5" style="margin-top: 10px;">
+        <div class="text-right">
+            <button *ngIf="destinationEmail.html.length>0 && destinationEmail.messageSubject.length>0 && destinationEmail.to!=null" class="btn btn-primary waves-effect waves-light" (click)="send()"> <span>Send</span> <i class="mdi mdi-send ml-2"></i> </button>
+        </div>
+    </div>
+</div>
