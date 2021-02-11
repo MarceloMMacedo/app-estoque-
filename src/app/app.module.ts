@@ -43,8 +43,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { StorageService } from './services/storage.service';
 import { ListProdutosComponent } from './pages/produtos/list-produtos/list-produtos.component';
-
-
+ 
 
 import { MessageService } from 'primeng/api';
 
@@ -68,8 +67,8 @@ import {ScrollTopModule} from 'primeng/scrolltop';
 import {DialogModule} from 'primeng/dialog';
 import { LoginComponent } from './pages/auth/login/login.component';
 import { PreProdutoComponent } from './pages/produtos/pre-produto/pre-produto.component'; 
-
-
+import {AutoCompleteModule} from 'primeng/autocomplete';
+import {TabViewModule} from 'primeng/tabview';
 
 
 
@@ -110,7 +109,7 @@ const ngWizardConfig: NgWizardConfig = {
     ComponenteGeral,
     NgxSpinnerModule, 
     AvatarModule,
-    NgbModule,
+    NgbModule, 
 
     NgxCurrencyModule,
     NgWizardModule.forRoot(ngWizardConfig),
@@ -142,6 +141,8 @@ const ngWizardConfig: NgWizardConfig = {
     OverlayPanelModule,  
     SplitButtonModule, 
     ToolbarModule, 
+    AutoCompleteModule,
+    TabViewModule
 
   ],
   providers: [

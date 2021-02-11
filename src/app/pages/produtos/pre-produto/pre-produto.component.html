@@ -1,18 +1,56 @@
 <!-- Default box -->
 <div class="box-header with-border">
-    <h5 class="box-title">Adicionar Produto </h5>
+    <h5>Adicionar Produto </h5>
+    <div class="box-tools pull-right">
+        <!--<p-splitButton label="Novo" icon="pi pi-plus" [model]="items" [style]="{'height':'35px'}" styleClass="p-button-secondary p-button-sm"></p-splitButton>
+        -->
+    </div>
+
+
+    <p-dialog header="Adicionar Modelo" [(visible)]="displaymodelo" [baseZIndex]="10000">
+        Modelo:<br/> <input type="text" class="p-inputtext-sm" placeholder="Modelo" pInputText [(ngModel)]="modelo.name" />
+        <p-button *ngIf="modelo.name!=null" icon="pi pi-save" (click)="addmodelo()" [style]="{width: '25px',height: '30px'}" styleClass="p-button-sm"></p-button>
+    </p-dialog>
+
+
+    <p-dialog header="Adicionar Categoria Produto" [(visible)]="displaycategoria" [baseZIndex]="10000">
+        Categoria:<br/> <input type="text" class="p-inputtext-sm" placeholder="Categoria" pInputText [(ngModel)]="categoria.name" />
+        <p-button *ngIf="categoria.name!=null" icon="pi pi-save" (click)="addcategoria()" [style]="{width: '25px',height: '30px'}" styleClass="p-button-sm"></p-button>
+    </p-dialog>
+
+
+
+
     <div class="row">
         <div class="col-12">
             <div class="form-group">
-                <label for="my-input">Modelo</label>
-                <input styleClass="md-inputfield" nz-input id="my-input" class=" form-control form-control-sm" 
-                type="text" name="name1" [(ngModel)]="produto.modelo">
-            </div>
-            <div class="form-group">
-                <label for="my-input">Categoria</label>
-                <input styleClass="md-inputfield" nz-input id="my-input" class=" form-control form-control-sm" type="text" 
-                name="name1" [(ngModel)]="produto.categoriaproduto.id">
+                <label for="my-input">Modelo</label> <br/>
+                <p-autoComplete class="  form-control-sm" [style]="{ height: '30px'}" [(ngModel)]="produto.modelo" [suggestions]="filteredCountries" (completeMethod)="filterModelo($event)" field="name" [dropdown]="true">
+                    <ng-template let-country pTemplate="item">
+                        <div class="country-item">
+                            <div>{{country.name}}</div>
+                        </div>
+                    </ng-template>
+                </p-autoComplete>
+
+                <p-button icon="pi pi-plus" [style]="{ height: '30px'}" (click)="newmodelo()"></p-button>
             </div>
         </div>
+        <div class="col-12">
+            <div class="form-group">
+                <label for="my-input">Categoria</label> <br/>
+                <p-autoComplete class="  form-control-sm" [style]="{ height: '30px'}" [(ngModel)]="produto.categoriaproduto" [suggestions]="filteredCountries" (completeMethod)="filtercategoria($event)" field="name" [dropdown]="true">
+                    <ng-template let-country pTemplate="item">
+                        <div class="country-item">
+                            <div>{{country.name}}</div>
+                        </div>
+                    </ng-template>
+                </p-autoComplete>
+
+                <p-button icon="pi pi-plus" [style]="{ height: '30px'}" (click)="newcategoria()"></p-button>
+            </div>
+        </div>
+        <p-confirmPopup></p-confirmPopup>
+        <button pButton pRipple type="button" [style]="{ height: '30px'}" label="Adicionar Produto" class="p-button-outlined" (click)="addproduto($event)" *ngIf="produto.modelo.name!=null && produto.categoriaproduto.name!=null"></button>
     </div>
 </div>

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
+import { NotificationService } from 'src/app/services/notification.service';
 import { StorageService } from 'src/app/services/storage.service';
 
 @Injectable({
@@ -9,6 +10,7 @@ export class AuthGuard implements CanActivate {
 
   constructor(
     private router: Router,
+    private notifyService : NotificationService,
     public storage: StorageService) {  }
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
@@ -22,7 +24,7 @@ export class AuthGuard implements CanActivate {
 
       const token = localUser.token;//window.localStorage.getItem('token');
       if (token != null) {
-        console.log(token);
+        //this.notifyService.showSuccess('Acesso',"Bemvindo ao Controle de Estoque");
         return true;
       } else {
         this.router.navigate(['login']);

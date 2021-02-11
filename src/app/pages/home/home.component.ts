@@ -16,8 +16,7 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private storage: StorageService,
-    private router: Router,
-    private notifyService : NotificationService,
+    private router: Router, 
     private funcionarioService: FuncionarioService) {  
       this.funcionarioService.findemail(this.storage.getIdUser().email).subscribe(
         (resp) => {
@@ -42,7 +41,7 @@ export class HomeComponent implements OnInit {
         console.log(resp)
       }
     ) 
-    this.notifyService.showSuccess('Acesso',"Bemvindo ao Controle de Estoque")
+  
   }
   logout() {
     this.storage.setLocalUser(null);

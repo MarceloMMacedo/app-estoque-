@@ -8,6 +8,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ProdutoDto } from '../models/dto/produto-dto';
 import { DestinationEmail } from '../models/destination-email';
 import { Modelo } from '../models/modelo';
+import { CategoriaProduto } from '../models/categoria-produto';
+import { Produto } from '../models/produto';
 
 @Injectable({
   providedIn: 'root'
@@ -22,11 +24,22 @@ export class ProdutoService {
   ) { }
 
 
+
+  async getid(id): Promise<Produto> {
+   return this.http.get<Produto>(`${API_CONFIG.produtos}/${id}`)
+      .toPromise()
+      .then(res => <Produto >res)
+      .then(data => { return data; });
+  }
+
   getAll(): Promise<ProdutoDto[]> {
     return this.http.get<ProdutoDto[]>(`${API_CONFIG.produtos}/getallprodutos`)
       .toPromise()
       .then(res => <ProdutoDto[]>res)
       .then(data => { return data; });
+  }
+  insert(p) {
+    return this.http.post(`${API_CONFIG.produtos}`, p, { observe: 'response', responseType: 'text' });
   }
   getview(): any {
     const httpOptions = {
@@ -46,8 +59,34 @@ export class ProdutoService {
       .then(res => <ProdutoDto[]>res)
       .then(data => { return data; });
   }
-insermodelo(m:Modelo){
-  return this.http.put(`${API_CONFIG.produtos}/insermodelo`, m);
-}
+  insermodelo(m: Modelo) {
+    console.log(m);
+    return this.http.put(`${API_CONFIG.produtos}/insermodelo`, m);
+  }
+  ismodelo(m: string): Promise<boolean> {
+    console.log(m);
+    return this.http.get<boolean>(`${API_CONFIG.produtos}/ismodelo?value=${m}`)
+      .toPromise()
+      .then(res => <boolean>res)
+      .then(data => { return data; });
+  }
 
+  //categori produto
+  allcategoriaprodutos(): Promise<CategoriaProduto[]> {
+    return this.http.get<CategoriaProduto[]>(`${API_CONFIG.produtos}/allcategoriaprodutos`)
+      .toPromise()
+      .then(res => <ProdutoDto[]>res)
+      .then(data => { return data; });
+  }
+  insertcategoriaproduto(m: CategoriaProduto) {
+    console.log(m);
+    return this.http.put(`${API_CONFIG.produtos}/insertcategoriaproduto`, m);
+  }
+  iscategoriaproduto(m: string): Promise<boolean> {
+    console.log(m);
+    return this.http.get<boolean>(`${API_CONFIG.produtos}/iscategoriaproduto?value=${m}`)
+      .toPromise()
+      .then(res => <boolean>res)
+      .then(data => { return data; });
+  }
 }

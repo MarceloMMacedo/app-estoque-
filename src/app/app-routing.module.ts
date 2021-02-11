@@ -3,8 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { AuthGuard } from './account/shared/auth.guard'; 
 import { ListProdutosComponent } from './pages/produtos/list-produtos/list-produtos.component';
-import { EditProdutoComponent } from './pages/produtos/edit-produto/edit-produto.component';
 import { LoginComponent } from './pages/auth/login/login.component';
+import { EditProdutoComponent } from './pages/produtos/edit-produto/edit-produto.component';
 //import { CompanyComponent } from './pages/company/company.component';   
 
 const routes: Routes = [
@@ -13,7 +13,7 @@ const routes: Routes = [
     component: HomeComponent,
     children: [ 
       { path: 'produtos', component: ListProdutosComponent },
-      { path: 'produtos:/id', component: EditProdutoComponent },
+      { path: 'produtos/:id', component: EditProdutoComponent },
 
   
     ],

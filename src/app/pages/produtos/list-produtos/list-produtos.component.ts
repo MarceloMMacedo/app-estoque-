@@ -44,7 +44,7 @@ export class ListProdutosComponent implements OnInit {
     this.produtosService.getAll().then(
       rest => {
         this.produtos = rest; 
-        this.notificationService.showSuccess("Bem vindo", "Bem vindo ao Cadastro de Produtos")
+        this.notificationService.showSuccess("Bem vindo", "Lista de Produtos")
       },
       error=>{
         this.storageService.logout;
@@ -55,9 +55,8 @@ export class ListProdutosComponent implements OnInit {
     this.items = [
       {
         label: 'Adicionar', styleClass: 'p-button-sm', icon: 'pi pi-plus', command: () => {
-          this.notificationService.showSuccess("Bem vindo", "Bem vindo ao Cadastro de Produtos");
-          (event: any)=>{
-            this.notificationService.showSuccess("Bem vindo", "event.timeStamp");
+          this.notificationService.showSuccess("Bem vindo", "Lista de Produtos");
+          (event: any)=>{ 
           }
         }
         

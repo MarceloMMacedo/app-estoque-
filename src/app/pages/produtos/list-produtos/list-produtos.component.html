@@ -18,7 +18,6 @@
 
 
 
-    <button type="text" pButton label="Basic" (click)="op.toggle($event)"></button>
 
     <p-overlayPanel #op [showCloseIcon]="true" [style]="{width: '450px'}">
         <ng-template pTemplate>
@@ -39,19 +38,18 @@
             <div class="box-tools pull-right">
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Dropdown button
+                      Atividade
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <button class="dropdown-item" (click)="op.toggle($event)">q</button>
+                        <button class="dropdown-item" (click)="op.toggle($event)">Adicionar</button>
 
 
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
+                        <a class="dropdown-item" (click)="printview()">Imprimir</a>
+                        <a class="dropdown-item" (click)="opensendmail()">Enviar Email</a>
                     </div>
 
                 </div>
 
-                <p-splitButton label="Atividade" icon="pi pi-plus" [model]="items" [style]="{'height':'35px'}" styleClass="p-button-secondary p-button-sm"></p-splitButton>
 
 
             </div>

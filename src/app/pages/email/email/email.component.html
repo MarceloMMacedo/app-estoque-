@@ -1,8 +1,7 @@
 <div class="container">
     <h3>{{name}} </h3>
 
-    <p-multiSelect [options]="contacts" [(ngModel)]="destinationEmail.to" defaultLabel="Select a email" 
-    optionLabel="name" optionValue="email">
+    <p-multiSelect [options]="contacts" [(ngModel)]="destinationEmail.to" defaultLabel="Select a email" optionLabel="name" optionValue="email">
         <!--<ng-template let-value pTemplate="selectedItems">
             <div class="country-item country-item-value" *ngFor="let option of destinationEmail.to">
                 <div>{{option.name}}</div>
