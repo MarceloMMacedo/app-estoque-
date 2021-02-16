@@ -1,6 +1,6 @@
 import { CategoriaProduto } from "./categoria-produto";
-import { Modelo } from "./modelo";
-import { Pessoa } from "./pessoa";
+import { FornecedorProduto } from "./fornecedor-produto";
+import { Modelo } from "./modelo"; 
 
 export interface Produto {
     id?: number;
@@ -24,6 +24,6 @@ export interface Produto {
     saldo: number;// saldo total de itens em estoque:number;
     saldoweb: number;// saldo total de itens em estoque:number;
     saldocontrato: number;// saldo total de itens em estoque;    
-    fornecedores?: Pessoa[];
+    fornecedores?: FornecedorProduto[];
     valorinterno: number;
 }

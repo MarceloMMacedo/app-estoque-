@@ -26,8 +26,9 @@ export class HomeComponent implements OnInit {
       ) 
   
   }
-
+  scale: number =12;
   ngOnInit(): void {
+    document.documentElement.style.fontSize = this.scale + 'px';
     this.usuario = {} as BaseDto;
    try{ 
      this.usuario = this.storage.getIdUser(); 

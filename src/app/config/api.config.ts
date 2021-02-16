@@ -5,6 +5,7 @@ export const API_CONFIG = {
     patrimonios:"http://localhost:10061/patrimonios",
     funcionarios:"http://localhost:10061/funcionarios",
     produtos:"http://localhost:10061/produtos", 
+    fornecedores:"http://localhost:10061/fornecedores", 
 
 
 }

@@ -68,10 +68,10 @@
         <p-table #dt [value]="produtos" [(selection)]="produtos" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
             [filterDelay]="0" [globalFilterFields]="['name','modelo','categoria','tipoproduto']">
             <ng-template pTemplate="caption">
-                <div class=" " style="width: 200px;">
-                    Lista de Produtos
-                    <span class="p-input-icon-left p-ml-auto">  
-                        <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" 
+                <div class="table-header form-element">
+                    Pesquisar Produto:
+                    <span class="p-input-icon-left  ">  
+                        <input   type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" 
                       style="width: 200px;"  placeholder="Pesquisa" />
                     </span>
                 </div>
@@ -100,7 +100,9 @@
                     <td>{{produto.categoria}}</td>
                     <td>{{produto.saldo}}</td>
                     <td>{{produto.valor|currency:'BRL'}}</td>
-                    <td></td>
+                    <td><a [routerLink]="['/produtos', produto.id]" routerLinkActive="router-link-active"><i class="pi pi-user-edit"></i></a></td>
                 </tr>
             </ng-template>
         </p-table>
+    </div>
+</section>

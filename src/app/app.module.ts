@@ -42,7 +42,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { StorageService } from './services/storage.service';
-import { ListProdutosComponent } from './pages/produtos/list-produtos/list-produtos.component';
+import { ListProdutosComponent } from './pages/produtos/list-produtos/list-produtos.component'; 
  
 
 import { MessageService } from 'primeng/api';
@@ -69,8 +69,12 @@ import { LoginComponent } from './pages/auth/login/login.component';
 import { PreProdutoComponent } from './pages/produtos/pre-produto/pre-produto.component'; 
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import {TabViewModule} from 'primeng/tabview';
-
-
+import {InputNumberModule} from 'primeng/inputnumber';
+import {InputTextModule} from 'primeng/inputtext';
+import {DropdownModule} from 'primeng/dropdown';  
+import { FornecedoresComponent } from './pages/produtos/fornecedores/fornecedores.component';
+import { ListFornecedoresComponent } from './pages/fornecedores/list-fornecedores/list-fornecedores.component';
+import { EditFornecedoresComponent } from './pages/fornecedores/edit-fornecedores/edit-fornecedores.component';
 
 
 
@@ -90,6 +94,8 @@ const ngWizardConfig: NgWizardConfig = {
     EditProdutoComponent,
     EmailComponent,
     PreProdutoComponent,
+    FornecedoresComponent, 
+    ListFornecedoresComponent, EditFornecedoresComponent
   ],
   imports: [
     BrowserModule, 
@@ -142,7 +148,10 @@ const ngWizardConfig: NgWizardConfig = {
     SplitButtonModule, 
     ToolbarModule, 
     AutoCompleteModule,
-    TabViewModule
+    TabViewModule,
+    InputNumberModule,
+    InputTextModule,
+    DropdownModule,
 
   ],
   providers: [

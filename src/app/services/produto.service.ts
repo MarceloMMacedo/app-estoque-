@@ -9,7 +9,8 @@ import { ProdutoDto } from '../models/dto/produto-dto';
 import { DestinationEmail } from '../models/destination-email';
 import { Modelo } from '../models/modelo';
 import { CategoriaProduto } from '../models/categoria-produto';
-import { Produto } from '../models/produto';
+import { Produto } from '../models/produto'; 
+import { BaseDto } from '../models/dto/base-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -26,17 +27,24 @@ export class ProdutoService {
 
 
   async getid(id): Promise<Produto> {
-   return this.http.get<Produto>(`${API_CONFIG.produtos}/${id}`)
+    return this.http.get<Produto>(`${API_CONFIG.produtos}/${id}`)
       .toPromise()
-      .then(res => <Produto >res)
+      .then(res => <Produto>res)
       .then(data => { return data; });
   }
+  save(p: Produto) {
+    return this.http.put(`${API_CONFIG.produtos}/${p.id}`, p,);
+  }
+
 
   getAll(): Promise<ProdutoDto[]> {
     return this.http.get<ProdutoDto[]>(`${API_CONFIG.produtos}/getallprodutos`)
       .toPromise()
       .then(res => <ProdutoDto[]>res)
       .then(data => { return data; });
+  }
+  fornecedores(): Observable<BaseDto[]> {
+    return this.http.get<BaseDto[]>(`${API_CONFIG.produtos}/fornecedores`)
   }
   insert(p) {
     return this.http.post(`${API_CONFIG.produtos}`, p, { observe: 'response', responseType: 'text' });
@@ -61,7 +69,7 @@ export class ProdutoService {
   }
   insermodelo(m: Modelo) {
     console.log(m);
-    return this.http.put(`${API_CONFIG.produtos}/insermodelo`, m);
+    return this.http.post(`${API_CONFIG.produtos}/insermodelo`, m, { observe: 'response', responseType: 'text' });
   }
   ismodelo(m: string): Promise<boolean> {
     console.log(m);
@@ -80,7 +88,7 @@ export class ProdutoService {
   }
   insertcategoriaproduto(m: CategoriaProduto) {
     console.log(m);
-    return this.http.put(`${API_CONFIG.produtos}/insertcategoriaproduto`, m);
+    return this.http.post(`${API_CONFIG.produtos}/insertcategoriaproduto`, m, { observe: 'response', responseType: 'text' });
   }
   iscategoriaproduto(m: string): Promise<boolean> {
     console.log(m);

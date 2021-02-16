@@ -1,4 +1,6 @@
- 
+import { ContasBancaria } from './contas-bancaria';
+import { Endereco } from './endereco';
+import { Contato } from './contato';
 
 export interface Pessoa {
 	id?: number;
@@ -26,10 +28,15 @@ export interface Pessoa {
 	porte?: string;
 	natureza_juridica?: string;
 	capital_social?: string;
-	typePerson?: string; 
+	typePerson?: string;
+	enderecos?: Endereco[];
+	enderecoPrincipal?: Endereco;
+	contasBancarias?: ContasBancaria[];
 	tipoSanguineo?: string;
 	atividade_principal?: string;
-	nameFantasia?: string; 
+	nameFantasia?: string;
+	contatos?: Contato[];
+	contatoPrincipal?: Contato;
 	telefone?: string;
 	street?: string;
 	zipCode?: string;

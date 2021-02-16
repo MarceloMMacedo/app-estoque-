@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';import { ConfirmationService, MessageService } from 'primeng/api';
+import { ActivatedRoute, Router } from '@angular/router'; import { ConfirmationService, MessageService } from 'primeng/api';
 import { CategoriaProduto } from 'src/app/models/categoria-produto';
- import { Contato } from 'src/app/models/contato';
+import { Contato } from 'src/app/models/contato';
 import { ProdutoDto } from 'src/app/models/dto/produto-dto';
+import { FornecedorProduto } from 'src/app/models/fornecedor-produto';
 import { Modelo } from 'src/app/models/modelo';
 import { Produto } from 'src/app/models/produto';
 import { FuncionarioService } from 'src/app/services/funcionario.service';
-import { NotificationService } from 'src/app/services/notification.service'; 
+import { NotificationService } from 'src/app/services/notification.service';
 import { ProdutoService } from 'src/app/services/produto.service';
 import { StorageService } from 'src/app/services/storage.service';
 
@@ -23,50 +24,38 @@ export class EditProdutoComponent implements OnInit {
   modelo: Modelo;
   filteredCountries: Modelo[];
   displaymodelo: boolean = false;
+  display: boolean = false; 
 
   categorias: CategoriaProduto[];
   categoria: CategoriaProduto;
   filteredcategoria: CategoriaProduto[];
   displaycategoria: boolean = false;
-  
-  produto: Produto={} as Produto;
+
+  produto: Produto = {} as Produto;
+  fornecedor:FornecedorProduto;
+
+  unidade = [
+    { value: "Refil" },
+    { value: "Unidade" },
+    { value: "Litro" },
+    { value: "Kilo" },
+    { value: "Gramas" }
+  ];
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private produtosService: ProdutoService,
     private notificationService: NotificationService,
     private storageService: StorageService,
-    private funcionarioService: FuncionarioService,   
+    private funcionarioService: FuncionarioService,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService, 
+    private messageService: MessageService,
   ) { }
 
   ngOnInit(): void {
 
     this.route.params.subscribe(params => this.index = params['id']);
-    this.produtosService.getid(this.index).then(
-      rest => {
-        if (rest === null) {
-          console.log("erro");
-          this.notificationService.showError("Produto Inexistente", "Alerta");
-          this.router.navigate(["produtos"]);
-        } else{
-          console.log(rest);
-          this.produto=rest;
-        }
-      },
-      error => {
-        console.log("erro");
-        this.notificationService.showError("Produto Inexistente", "Alerta");
-        this.router.navigate(["produtos"]);
-      }
-    ).catch(
-      erro => {
-        console.log("erro");
-        this.notificationService.showError("Produto Inexistente", "Alerta");
-        this.router.navigate(["produtos"]);
-      }
-    )
+    this.loadproduto();
 
     this.modelo = {} as Modelo;
     this.produto = {} as Produto;
@@ -98,27 +87,64 @@ export class EditProdutoComponent implements OnInit {
     )
 
   }
+
+  async loadproduto() {
+    await this.produtosService.getid(this.index).then(
+      rest => {
+        if (rest === null) {
+          console.log("erro");
+          this.notificationService.showError("Produto Inexistente", "Alerta");
+          this.router.navigate(["produtos"]);
+        } else {
+          console.log(rest);
+          this.produto = rest;
+        }
+      },
+      error => {
+        console.log("erro");
+        this.notificationService.showError("Produto Inexistente", "Alerta");
+        this.router.navigate(["produtos"]);
+      }
+    ).catch(
+      erro => {
+        console.log("erro");
+        this.notificationService.showError("Produto Inexistente", "Alerta");
+        this.router.navigate(["produtos"]);
+      }
+    )
+  }
   onClickImagePrincipal() {
     $('#imgupload').trigger('click');
   }
-  async onUploadMainImage(event: Event){
- 
+  async save() {
+
+    (this.produtosService.save(this.produto)).subscribe(
+      rest => {
+        this.notificationService.showSuccess("Produto Salvo com sucesso", "Sucesso");
+        // this.produto = JSON.parse( rest.body);
+        this.loadproduto();
+      }
+    )
+
+  }
+  async onUploadMainImage(event: Event) {
+
     //if (this.contacts.indexOf(this.contact) === -1) {
-      
-         
-   // } 
+
+
+    // } 
     //  
-  console.log("Deseja adicionar Produto?");
+    console.log("Deseja adicionar Produto?");
     this.confirmationService.confirm({
       target: event.target,
       message: "Deseja adicionar Produto?",
       icon: "pi pi-exclamation-triangle",
       accept: () => {
         this.produtosService.insert(this.produto).subscribe(
-          rest=>{
-            let index=rest.body;
-  
-            this.router.navigate(['/produtos',rest.body]);
+          rest => {
+            let index = rest.body;
+
+            this.router.navigate(['/produtos', rest.body]);
           }
         )
       },
@@ -131,8 +157,13 @@ export class EditProdutoComponent implements OnInit {
       }
     });
   }
+savefornecedor(){
+  this.display=false;
+  this.loadproduto();
+}
+excluirfornecedor(){
   
- 
+}
   /*(event) {
     this.modal.confirm({
       nzTitle: 'Deseja Alterar Avatar da Cliente?',
@@ -176,11 +207,16 @@ export class EditProdutoComponent implements OnInit {
           this.notificationService.showError("Modelo já está cadastrado", "Alerta")
 
         } else {
-          this.produtosService.insermodelo(this.modelo).subscribe();
-          this.notificationService.showSuccess("Modelo adicionado com sucesso", "Aviso")
-          this.filteredCountries = [...this.filteredCountries, this.modelo];
-          this.modelos = [...this.modelos, this.modelo];
-          this.displaymodelo = false;
+          this.produtosService.insermodelo(this.modelo).subscribe(
+            rest => {
+              this.notificationService.showSuccess("Modelo adicionado com sucesso", "Aviso")
+              this.modelo.id= parseFloat(rest.body);
+              this.filteredCountries = [...this.filteredCountries, this.modelo];
+              this.modelos = [...this.modelos, this.modelo];
+              this.displaymodelo = false;
+            }
+          );
+
         }
       }
     )
@@ -216,10 +252,14 @@ export class EditProdutoComponent implements OnInit {
           this.notificationService.showError("Categoria já está cadastrado", "Alerta")
 
         } else {
-          this.produtosService.insertcategoriaproduto(this.categoria).subscribe();
-          this.notificationService.showSuccess("Categoria adicionado com sucesso", "Aviso")
-          this.filteredCountries = [...this.filteredcategoria, this.categoria];
-          this.categorias = [...this.categorias, this.categoria];
+          this.produtosService.insertcategoriaproduto(this.categoria).subscribe(
+          rest=>{ 
+            this.categoria.id= parseFloat(rest.body);
+             this.notificationService.showSuccess("Categoria adicionado com sucesso", "Aviso")
+            this.filteredCountries = [...this.filteredcategoria, this.categoria];
+            this.categorias = [...this.categorias, this.categoria];
+                    });
+         
           this.displaycategoria = false;
         }
       }
@@ -227,5 +267,5 @@ export class EditProdutoComponent implements OnInit {
 
   }
 
-   
+
 }

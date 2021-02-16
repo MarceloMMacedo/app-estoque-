@@ -52,39 +52,230 @@
                 <div class="col-md-12 col-xl-9">
                     <div class="card">
                         <div class="card-body">
-                            <p-tabView styleClass="tabview-custom">
-                                <p-tabPanel>
-                                    <ng-template pTemplate="header">
-                                        <i class="pi pi-calendar"></i>
-                                        <span>Header I</span>
-                                    </ng-template>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-                                        est laborum.</p>
-                                </p-tabPanel>
-                                <p-tabPanel header="Header II">
-                                    <ng-template pTemplate="header">
-                                        <i class="pi pi-user"></i>
-                                        <span>Header II</span>
-                                    </ng-template>
-                                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-                                        Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi.</p>
-                                </p-tabPanel>
-                                <p-tabPanel header="Header III">
-                                    <ng-template pTemplate="header">
-                                        <i class="pi pi-search"></i>
-                                        <span>Header III</span>
-                                        <i class="pi pi-cog"></i>
-                                    </ng-template>
-                                    <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt
-                                        in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit
-                                        quo minus.</p>
-                                </p-tabPanel>
-                            </p-tabView>
+                            <div class="box-tools pull-right">
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  Adicionar </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                                        <a class="dropdown-item" (click)="newmodelo()">Modelo</a>
+                                        <a class="dropdown-item" (click)="newcategoria()">Categoria</a>
+                                    </div>
+                                    <p-dialog header="Adicionar Modelo" [(visible)]="displaymodelo" [baseZIndex]="10000">
+                                        Modelo:<br/> <input type="text" class="" placeholder="Modelo" pInputText [(ngModel)]="modelo.name" />
+                                        <p-button *ngIf="modelo.name!=null" icon="pi pi-save" (click)="addmodelo()" [style]="{width: '25px',height: '30px'}" styleClass="p-button-sm"></p-button>
+                                    </p-dialog>
+
+
+                                    <p-dialog header="Adicionar Categoria Produto" [(visible)]="displaycategoria" [baseZIndex]="10000">
+                                        Categoria:<br/> <input type="text" class="" placeholder="Categoria" pInputText [(ngModel)]="categoria.name" />
+                                        <p-button *ngIf="categoria.name!=null" icon="pi pi-save" (click)="addcategoria()" [style]="{width: '25px',height: '30px'}" styleClass="p-button-sm"></p-button>
+                                    </p-dialog>
+                                </div>
+                            </div>
+                            <div class="profile-widgets py-3">
+
+                                <hr/>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label class="control-label">Produto</label>
+                                            <input pInputText id="my-input" class=" form-control  " type="text" name="name1" [(ngModel)]="produto.name">
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <hr/>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Modelo</label> <br/>
+                                            <p-autoComplete class="  form-control-sm" [style]="{ height: '30px'}" [(ngModel)]="produto.modelo" [suggestions]="filteredCountries" (completeMethod)="filterModelo($event)" field="name" [dropdown]="true">
+                                                <ng-template let-country pTemplate="item">
+                                                    <div class="country-item">
+                                                        <div>{{country.name}}</div>
+                                                    </div>
+                                                </ng-template>
+                                            </p-autoComplete>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
+
+                                        <div class="form-group">
+                                            <label class="control-label">Categoria</label> <br/>
+                                            <!--
+                                                <p-dropdown [options]="categorias" [(ngModel)]="produto.categoriaproduto.id" optionLabel="name" optionValue="id" [filter]="true" filterBy="name" [showClear]="true" placeholder="Selecionae Categoria">
+                                                <ng-template pTemplate="selectedItem">
+                                                    <div class="country-item country-item-value" *ngIf="produto.categoriaproduto.id">
+                                                        <div>{{produto.categoriaproduto.id}}</div>
+                                                    </div>
+                                                </ng-template>
+                                                <ng-template let-categoria pTemplate="item">
+                                                    <div class="country-item">
+                                                        <div>{{categoria.name}}</div>
+                                                    </div>
+                                                </ng-template>
+                                            </p-dropdown>
+                                        -->
+                                            <p-autoComplete class="  form-control-sm" [style]="{ height: '30px'}" [(ngModel)]="produto.categoriaproduto" [suggestions]="filteredCountries" (completeMethod)="filtercategoria($event)" field="name" [dropdown]="true">
+                                                <ng-template let-country pTemplate="item">
+                                                    <div class="country-item">
+                                                        <div>{{country.name}}</div>
+                                                    </div>
+                                                </ng-template>
+                                            </p-autoComplete>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Complemento</label> <br/>
+                                            <input pInputText class=" form-control" [(ngModel)]="produto.nameComplemento">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Localização</label> <br/>
+                                            <input pInputText class="" class=" form-control" [(ngModel)]="produto.localizacao">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label class="control-label">Altura</label> <br/>
+                                            <p-inputNumber inputId="integeronly" class="" [(ngModel)]="produto.altura">
+                                            </p-inputNumber>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <div class="form-group">
+                                            <label class="control-label">Largura</label> <br/>
+                                            <p-inputNumber inputId="integeronly" class="" [(ngModel)]="produto.lagura">
+                                            </p-inputNumber>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label class="control-label">comprimento</label><br/>
+                                            <p-inputNumber inputId="integeronly" class="" [(ngModel)]="produto.comprimento">
+                                            </p-inputNumber>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label class="control-label">Peso</label><br/>
+                                            <p-inputNumber inputId="integeronly" class="" [(ngModel)]="produto.peso">
+                                            </p-inputNumber>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- 
+                                 unidadeproduto?: string;   saldo: number;   
+                                     valorinterno: number;
+                                     -->
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Unidade</label> <br/>
+                                            <p-dropdown [options]="unidade" [(ngModel)]="produto.unidadeproduto" placeholder="selecione uma Unidade" optionLabel="value" [showClear]="true"></p-dropdown>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Saldo</label><br/>
+                                            <p-inputNumber inputId="integeronly" class="" [(ngModel)]="produto.saldo">
+                                            </p-inputNumber>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Valor</label><br/>
+                                            <p-inputNumber readonly="true" inputId="currency-brazil" mode="currency" currency="BRL" locale="pt-BR" class="" [(ngModel)]="produto.valorinterno">
+                                            </p-inputNumber>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="box">
+                                    <div class="box-header with-border">
+                                        <button pButton pRipple type="button" label="Salvar" (click)="save()" class="p-button-raised" icon="pi pi-save"> </button>
+                                    </div>
+                                </div>
+
+
+                                <div class="card-body">
+                                    <p-tabView styleClass="tabview-custom">
+
+                                        <p-tabPanel header="Header II">
+                                            <ng-template pTemplate="header">
+                                                <i class="pi pi-user"></i>
+                                                <span>Fornecedores</span>
+
+
+                                            </ng-template>
+                                            <div class="box">
+                                                <div class="box-header with-border">
+
+
+
+                                                    <p-table #dt [value]="produto.fornecedores" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                                                        [filterDelay]="0" [globalFilterFields]="['name']">
+                                                        <ng-template pTemplate="caption">
+                                                            <div class="table-header form-element">
+                                                                Pesquisar Fornecedor:
+                                                                <span class="p-input-icon-left p-ml-auto form-element">  
+                                                                    <input   type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"     style="width: 200px;"  placeholder="Pesquisa" />
+                                                                </span>
+                                                                <div class=" pull-right">
+                                                                    <button class="btn  " type="button" id="dropdownMenuButton">Adicionar Fornecedor   </button>
+                                                                </div>
+                                                            </div>
+                                                        </ng-template>
+                                                        <ng-template pTemplate="header">
+                                                            <tr>
+                                                                <th style="width: 40px;"> </th>
+                                                                <th>Nome</th>
+                                                                <th>Modelo</th>
+                                                                <th>valor</th>
+                                                                <th>Editar</th>
+                                                            </tr>
+                                                        </ng-template>
+                                                        <ng-template pTemplate="body" let-fornecedor>
+                                                            <tr>
+                                                                <td>
+                                                                    <p-avatar image={{fornecedor.avatarView}} styleClass="p-mr-2" styleClass="p-mr-2" shape="circle"></p-avatar>
+
+                                                                </td>
+                                                                <td>
+                                                                    {{fornecedor.name}}
+                                                                </td>
+                                                                <td>{{fornecedor.modelo}}</td>
+                                                                <td>{{fornecedor.valor|currency:'BRL'}}</td>
+                                                                <td></td>
+                                                            </tr>
+                                                        </ng-template>
+                                                    </p-table>
+                                                </div>
+                                            </div>
+                                        </p-tabPanel>
+                                    </p-tabView>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <p-dialog header="Fornecedor de Produto" [(visible)]="display" [style]="{width: '50vw'}" [baseZIndex]="10000">
+        <app-fornecedores [fornecedorproduto]="fornecedor"></app-fornecedores>
+    </p-dialog>
 </section>
