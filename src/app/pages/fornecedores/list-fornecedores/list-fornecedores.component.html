@@ -1,1 +1,95 @@
-<p>list-fornecedores works!</p>
+<section class="content-header">
+    <h1>
+        Lista Fornecedores
+    </h1>
+    <!--<ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Examples</a></li>
+        <li class="breadcrumb-item active">Blank page</li>
+	  </ol>
+	-->
+</section>
+
+<section class="content">
+
+
+
+
+    <!-- Default box -->
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title"> </h3>
+
+            <!--<div class="form-group form-inline form-element">
+                Pesquisar: <input nz-input placeholder="Pesquisar" class="form-control form-control-sm ml-2 " name="pesquisa" name="search" [(ngModel)]="searchValue" #search (keyup)="debounceTimeSearch()">
+
+            </div>
+            <div class="box-tools pull-right">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Atividade
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <button class="dropdown-item" (click)="op.toggle($event)">Adicionar</button>
+
+
+                        <a class="dropdown-item" (click)="printview()">Imprimir</a>
+                        <a class="dropdown-item" (click)="opensendmail()">Enviar Email</a>
+                    </div>
+
+                </div>
+
+
+
+            </div>
+        -->
+            <!--<div class="box-tools pull-right">
+              <button type="button" class="btn btn-outline-primary btn-sm"   (click)="printview()">
+                <i nz-icon nzType="printer" nzTheme="outline"></i>Imprimir
+     </button>
+                 <button class="btn btn-outline-primary mb-2 mr-2" (click)="newcentrocusto(content)">
+               
+          Adicionar
+        </button>
+            </div>
+     -->
+        </div>
+
+        <p-table #dt [value]="pessoas" [(selection)]="pessoas" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [filterDelay]="0" [globalFilterFields]="['name' ,'cpfOnCnpj']">
+            <ng-template pTemplate="caption">
+                <div class="table-header form-element">
+                    Pesquisar Fornecedor:
+                    <span class="p-input-icon-left  ">  
+                        <input   type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" 
+                      style="width: 200px;"  placeholder="Pesquisa" />
+                    </span>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 40px;"> </th>
+                    <th>Nome</th>
+                    <th>CNPJ</th>
+                    <th>Email</th>
+
+                    <th>Editar</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-fornecedor>
+                <tr>
+                    <td>
+                        <p-avatar image={{fornecedor.avatarView}} styleClass="p-mr-2" styleClass="p-mr-2" shape="circle"></p-avatar>
+
+                    </td>
+                    <td>
+                        {{fornecedor.name}}
+                    </td>
+                    <td>{{fornecedor.modelo}}</td>
+                    <td>{{fornecedor.categoria}}</td>
+                    <td><a [routerLink]="['/fornecedor', fornecedor.id]" routerLinkActive="router-link-active"><i class="pi pi-user-edit"></i></a></td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</section>

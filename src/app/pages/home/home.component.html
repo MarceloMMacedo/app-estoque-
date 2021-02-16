@@ -29,9 +29,11 @@
                     <div class="dropdown-menu scale-up-left">
                         <ul class="mega-dropdown-menu row">
                             <li class="col-lg-3 col-md-3 col-12 m-b-30">
-                                <h5 class="m-b-20">Cadastro de Produtos</h5>
+                                <h5 class="m-b-20">Cadastros </h5>
                                 <!-- List style -->
                                 <ul class="list-style-none">
+                                    <li><a [routerLink]="['/fornecedores']" routerLinkActive="router-link-active">Fornecedores</a></li>
+
                                     <li><a [routerLink]="['/produtos']" routerLinkActive="router-link-active">Produtos</a></li>
                                     <li><a [routerLink]="['/patrimonios']" routerLinkActive="router-link-active">Patrimônios</a></li>
                                 </ul>
@@ -43,7 +45,6 @@
                                     <li><a [routerLink]="['/funcionarios']" routerLinkActive="router-link-active">Funcionários</a></li>
                                     <li><a [routerLink]="['/clientes']" routerLinkActive="router-link-active">Clientes</a></li>
                                     <li><a [routerLink]="['/parceiros']" routerLinkActive="router-link-active">Parceiros</a></li>
-                                    <li><a [routerLink]="['/fornecedores']" routerLinkActive="router-link-active">Fornecedores</a></li>
                                 </ul>
                             </li>
                             <li class="col-lg-3 col-md-3 col-12 m-b-30">
