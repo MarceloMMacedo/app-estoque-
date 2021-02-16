@@ -24,17 +24,20 @@
                 Pesquisar: <input nz-input placeholder="Pesquisar" class="form-control form-control-sm ml-2 " name="pesquisa" name="search" [(ngModel)]="searchValue" #search (keyup)="debounceTimeSearch()">
 
             </div>
+             -->
             <div class="box-tools pull-right">
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Atividade
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <button class="dropdown-item" (click)="op.toggle($event)">Adicionar</button>
+                        <button class="dropdown-item" [routerLink]="['/fornecedor','0']" routerLinkActive="router-link-active"><i class="pi pi-plus"></i> Adicionar</button>
 
 
-                        <a class="dropdown-item" (click)="printview()">Imprimir</a>
-                        <a class="dropdown-item" (click)="opensendmail()">Enviar Email</a>
+                        <!--
+                            <a class="dropdown-item">Imprimir</a>
+                        <a class="dropdown-item">Enviar Email</a>
+                        -->
                     </div>
 
                 </div>
@@ -42,7 +45,7 @@
 
 
             </div>
-        -->
+
             <!--<div class="box-tools pull-right">
               <button type="button" class="btn btn-outline-primary btn-sm"   (click)="printview()">
                 <i nz-icon nzType="printer" nzTheme="outline"></i>Imprimir

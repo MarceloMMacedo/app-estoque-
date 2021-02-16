@@ -6,10 +6,7 @@ import { Observable, BehaviorSubject, Subject, of } from 'rxjs';
 import { API_CONFIG } from '../config/api.config';
 import { Pessoa } from '../models/pessoa';
 import { UtilsService } from './utils.service';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { DecimalPipe } from '@angular/common';
-import { tap, debounceTime, switchMap, delay } from 'rxjs/operators';
-import { Pages } from '../models/pages';
+import { NgxSpinnerService } from 'ngx-spinner'; 
 
 @Injectable({
   providedIn: 'root'
@@ -23,15 +20,7 @@ export class FornecedorService {
     private spinner: NgxSpinnerService, ) {
 
   }
-
-  findNamePage(name: string, page: number, linesPerPage: number, orderBy: string, direction: string): Observable<Pages> {
-    let rota = API_CONFIG.baseUrl + '/fornecedores' + '/page?name=' + name + '&page=' + page +
-      '&linesPerPage=' + linesPerPage +
-      '&orderBy=' + orderBy + '&direction=' + direction;
-    console.log(rota);
-    return this.http.get<Pages>(rota);
-  }
-
+ 
 
   findperfil(email: string): Observable<BaseDto> {
     console.log(email);
