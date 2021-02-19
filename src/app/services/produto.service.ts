@@ -9,8 +9,9 @@ import { ProdutoDto } from '../models/dto/produto-dto';
 import { DestinationEmail } from '../models/destination-email';
 import { Modelo } from '../models/modelo';
 import { CategoriaProduto } from '../models/categoria-produto';
-import { Produto } from '../models/produto'; 
+import { Produto } from '../models/produto';
 import { BaseDto } from '../models/dto/base-dto';
+import { FornecedorProduto } from '../models/fornecedor-produto';
 
 @Injectable({
   providedIn: 'root'
@@ -96,5 +97,12 @@ export class ProdutoService {
       .toPromise()
       .then(res => <boolean>res)
       .then(data => { return data; });
+  }
+  insertfornecedorproduto(id, m: FornecedorProduto) {
+    console.log(m) ; 
+    return this.http.post(`${API_CONFIG.produtos}/insertfornecedorproduto/${id}`, m, { observe: 'response', responseType: 'text' });
+  }
+  updatefornecedorproduto(id,m: FornecedorProduto) {
+    return this.http.put(`${API_CONFIG.produtos}/updatefornecedorproduto/${id}`, m, { observe: 'response', responseType: 'text' });
   }
 }

@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router'; import { ConfirmationService, MessageService } from 'primeng/api';
+import { ActivatedRoute, Router } from '@angular/router'; import { parseHTML } from 'jquery';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { CategoriaProduto } from 'src/app/models/categoria-produto';
 import { Contato } from 'src/app/models/contato';
+import { BaseDto } from 'src/app/models/dto/base-dto';
 import { ProdutoDto } from 'src/app/models/dto/produto-dto';
 import { FornecedorProduto } from 'src/app/models/fornecedor-produto';
 import { Modelo } from 'src/app/models/modelo';
 import { Produto } from 'src/app/models/produto';
+import { FornecedorService } from 'src/app/services/fornecedor.service';
 import { FuncionarioService } from 'src/app/services/funcionario.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { ProdutoService } from 'src/app/services/produto.service';
@@ -24,7 +27,7 @@ export class EditProdutoComponent implements OnInit {
   modelo: Modelo;
   filteredCountries: Modelo[];
   displaymodelo: boolean = false;
-  display: boolean = false; 
+  display: boolean = false;
 
   categorias: CategoriaProduto[];
   categoria: CategoriaProduto;
@@ -32,7 +35,10 @@ export class EditProdutoComponent implements OnInit {
   displaycategoria: boolean = false;
 
   produto: Produto = {} as Produto;
-  fornecedor:FornecedorProduto;
+  fornecedor: FornecedorProduto;
+  isnewfornecedor: boolean = false;
+  fornecedoresbase: BaseDto[];
+  fornecedores: BaseDto[];
 
   unidade = [
     { value: "Refil" },
@@ -50,9 +56,11 @@ export class EditProdutoComponent implements OnInit {
     private funcionarioService: FuncionarioService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
+    private fornecedorService: FornecedorService
   ) { }
 
   ngOnInit(): void {
+
 
     this.route.params.subscribe(params => this.index = params['id']);
     this.loadproduto();
@@ -79,14 +87,19 @@ export class EditProdutoComponent implements OnInit {
       rest => {
         this.categorias = rest;
         this.filteredcategoria = rest;
-
       },
       error => {
 
       }
     )
-
+    this.fornecedorService.getAll().subscribe(
+      rest => {
+        this.fornecedores = rest;
+        this.fornecedoresbase = rest
+      })
   }
+
+
 
   async loadproduto() {
     await this.produtosService.getid(this.index).then(
@@ -157,13 +170,13 @@ export class EditProdutoComponent implements OnInit {
       }
     });
   }
-savefornecedor(){
-  this.display=false;
-  this.loadproduto();
-}
-excluirfornecedor(){
-  
-}
+  /*savefornecedor() {
+    this.display = false;
+    this.loadproduto();
+  }*/
+  excluirfornecedor() {
+
+  }
   /*(event) {
     this.modal.confirm({
       nzTitle: 'Deseja Alterar Avatar da Cliente?',
@@ -210,7 +223,7 @@ excluirfornecedor(){
           this.produtosService.insermodelo(this.modelo).subscribe(
             rest => {
               this.notificationService.showSuccess("Modelo adicionado com sucesso", "Aviso")
-              this.modelo.id= parseFloat(rest.body);
+              this.modelo.id = parseFloat(rest.body);
               this.filteredCountries = [...this.filteredCountries, this.modelo];
               this.modelos = [...this.modelos, this.modelo];
               this.displaymodelo = false;
@@ -253,19 +266,71 @@ excluirfornecedor(){
 
         } else {
           this.produtosService.insertcategoriaproduto(this.categoria).subscribe(
-          rest=>{ 
-            this.categoria.id= parseFloat(rest.body);
-             this.notificationService.showSuccess("Categoria adicionado com sucesso", "Aviso")
-            this.filteredCountries = [...this.filteredcategoria, this.categoria];
-            this.categorias = [...this.categorias, this.categoria];
-                    });
-         
+            rest => {
+              this.categoria.id = parseFloat(rest.body);
+              this.notificationService.showSuccess("Categoria adicionado com sucesso", "Aviso")
+              this.filteredCountries = [...this.filteredcategoria, this.categoria];
+              this.categorias = [...this.categorias, this.categoria];
+            });
+
           this.displaycategoria = false;
         }
       }
     )
 
   }
+  //fornecedor
+  newfornecedor() {
+    this.fornecedor = {} as FornecedorProduto;
 
+    this.isnewfornecedor = true;
+  }
+  savefornecedor() {
+    if (this.isnewfornecedor) {
+      this.insertFornecedor();
+    } else {
+      this.produtosService.updatefornecedorproduto(this.produto.id, this.fornecedor).subscribe(
+        rest => {
+          this.notificationService.showSuccess("Fornecedor do produto salvo com sucesso", "");
+          let id = parseFloat(rest.body);
+          this.produto.valorinterno=id;
+         // this.loadproduto();
+        }
+      )
+    }
 
+  }
+  insertFornecedor() {
+    console.log(this.fornecedor);
+    this.produtosService.insertfornecedorproduto(this.index, this.fornecedor).subscribe(
+      rest => {
+        let id = parseFloat(rest.body);
+        this.fornecedor.id = id;
+        this.notificationService.showSuccess("Fornecedor do produto adicionado com sucesso", "");
+        this.produto.fornecedores = [...this.produto.fornecedores, this.fornecedor];
+        this.isnewfornecedor = false;
+        this.loadproduto();
+
+      }
+    );
+  }
+  editfornrcedor(f) {
+    this.isnewfornecedor = false;
+    this.fornecedor = f;
+  }
+  filterfornecedor(event) {
+    //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
+    console.log(event.query)
+    let filtered: BaseDto[] = [] as BaseDto[];
+    let query = event.query;
+    for (let i = 0; i < this.fornecedoresbase.length; i++) {
+      let model = this.fornecedoresbase[i];
+      console.log(model.name.toLowerCase());
+      if (model.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+        filtered.push(model);
+      }
+    }
+
+    this.fornecedores = filtered;
+  }
 }

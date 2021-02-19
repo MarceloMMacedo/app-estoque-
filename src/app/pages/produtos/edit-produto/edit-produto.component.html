@@ -208,9 +208,47 @@
                                         <button pButton pRipple type="button" label="Salvar" (click)="save()" class="p-button-raised" icon="pi pi-save"> </button>
                                     </div>
                                 </div>
+                                <hr/>
+                                <div class=" box-tools pull-right">
+                                    <button pButton pRipple type="button" label="Adicionar Fornecedor" (click)="newfornecedor()" class="p-button-raised" icon="pi pi-save"> </button>
+                                </div>
+                                <br/>
+                                <div class="card-body ">
 
 
-                                <div class="card-body">
+                                    <div class="box-header box-tools box" *ngIf="fornecedor!=null">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label">Fonecedor</label> <br/>
+                                                    <p-autoComplete class="  " [style]="{ height: '30px', width: '100%'}" [(ngModel)]="fornecedor.fornecedor" [suggestions]="fornecedores" (completeMethod)="filterfornecedor($event)" field="name" [dropdown]="true">
+                                                        <ng-template let-country pTemplate="item">
+                                                            <div class="country-item">
+                                                                <div>{{country.name}}</div>
+                                                            </div>
+                                                        </ng-template>
+                                                    </p-autoComplete>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label class="control-label">Valor</label><br/>
+                                                    <p-inputNumber readonly="true" inputId="currency-brazil" mode="currency" currency="BRL" locale="pt-BR" class="" [(ngModel)]="fornecedor.valor">
+                                                    </p-inputNumber>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <button pButton pRipple type="button" label="Salvar Fornecedor" (click)="savefornecedor()" class="p-button-raised" icon="pi pi-save"> </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
                                     <p-tabView styleClass="tabview-custom">
 
                                         <p-tabPanel header="Header II">
@@ -242,7 +280,6 @@
                                                             <tr>
                                                                 <th style="width: 40px;"> </th>
                                                                 <th>Nome</th>
-                                                                <th>Modelo</th>
                                                                 <th>valor</th>
                                                                 <th>Editar</th>
                                                             </tr>
@@ -254,11 +291,12 @@
 
                                                                 </td>
                                                                 <td>
-                                                                    {{fornecedor.name}}
+                                                                    {{fornecedor.fornecedor.name}}
                                                                 </td>
-                                                                <td>{{fornecedor.modelo}}</td>
                                                                 <td>{{fornecedor.valor|currency:'BRL'}}</td>
-                                                                <td></td>
+                                                                <td>
+                                                                    <a (click)="editfornrcedor(fornecedor)"><i class="pi pi-user-edit"></i></a>
+                                                                </td>
                                                             </tr>
                                                         </ng-template>
                                                     </p-table>
